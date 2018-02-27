@@ -19,11 +19,13 @@ vector <string> readFromFile(string directory, string csvName) {
   ifstream fin(csvDirectory.c_str());
   //Initial vector <string> result
   vector <string> res;
-  //Read until end of file
-  while (!fin.eof()) {
+  //Infinite loop
+  while (true) {
     string s;
     //Store a whole line inside the temporary 's' variable
     getline(fin, s);
+    //If reach the end of the file
+    if (fin.eof()) break;
     //We need to store its directory
     s = directory + s;
     //Append into the vector string storeRows
@@ -117,7 +119,7 @@ void trainSetInitial() {
     string classId = intToClassId(i);
     string csvName = "GT-"+classId+".csv";
     vector<string> current = semicolonToComma(directory+classId+"/", csvName);
-    for (int i = 0; i < current.size(); ++i) 
+    for (int i = 0; i < current.size(); ++i)
       storeRows.push_back(current[i]);
   }
 
