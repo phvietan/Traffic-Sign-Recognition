@@ -18,12 +18,12 @@ class TrafficSignTrain(Dataset):
     
     def __getitem__(self, idx):
         # get the directory of the image
-        img_dir = str(self.csv.loc[idx+1,"Directory"])
+        img_dir = str(self.csv.loc[idx,"Directory"])
         # the directory inside the csv is not really correct, so we fix it by joining 2 more '..'
         img_dir = os.path.join("..", "..", "Dataset", img_dir)
         # get the classId and i need it to be numpy, not integer
         classId = []
-        classId.append(self.csv.loc[idx+1,"Class"])
+        classId.append(self.csv.loc[idx,"Class"])
         classId = np.asarray(classId)
         # get the image
         image = cv2.imread(img_dir)

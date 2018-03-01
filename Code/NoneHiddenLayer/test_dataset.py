@@ -18,12 +18,12 @@ class TrafficSignTest(Dataset):
     
     def __getitem__(self, idx):
         # get the directory of the image
-        img_dir = str(self.csv.loc[idx+1,"Directory"])
+        img_dir = str(self.csv.loc[idx,"Directory"])
         # the directory inside the csv is not really correct, so we fix it by joining 2 more '..'
         img_dir = os.path.join("..", "..", "Dataset", img_dir)
         # get the classId and i need it to be numpy, not integer
         classId = []
-        classId.append(self.csv.loc[idx+1,"Class"])
+        classId.append(self.csv.loc[idx,"Class"])
         classId = np.asarray(classId)
         # get the image
         image = cv2.imread(img_dir)
@@ -35,9 +35,11 @@ class TrafficSignTest(Dataset):
         image = image / 256
         # transpose from (64x64x3) to (3x64x64) because of Pytorch
         image = np.transpose(image, (2, 0, 1))
+        # we need to add a dummy dimension because of Pytorch
+        image = np.expand_dims(image, axis=0)
         # return result
         sample = {'image': image, 'classId': classId }
         return sample
   
     def __len__(self):
-        return len(self.csv)-1
+        return len(self.csv)
