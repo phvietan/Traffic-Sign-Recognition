@@ -23,6 +23,10 @@ def train_data(checkpoint_path, model_name, learning_rate = (1e-4), num_epochs =
     # use adam optimization
     optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate)
 
+    # change the learning rate as your will
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = learning_rate
+
     name_checkpoint = model_name + ".chkpt"
     hist = []
     if (resume):
@@ -55,7 +59,7 @@ def train_data(checkpoint_path, model_name, learning_rate = (1e-4), num_epochs =
             # output the status every N iterations
             if (i%N==0):
                 now = time.time()
-                print("iterate %d: loss = %.9f, spent = %.5f" % (i + 1, loss.data[0], now - start))
+                print("iterate %d: loss = %.9f, spent = %.5f seconds" % (i + 1, loss.data[0], now - start))
                 start = now
             i = i+1
         # output the status after each epoch

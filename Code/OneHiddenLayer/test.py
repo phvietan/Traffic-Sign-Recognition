@@ -13,6 +13,8 @@ train_set = TrafficSignTrain()
 print("Size of test set is:", len(test_set), "images")
 print("Size of train set is:", len(train_set), "images")
 
+print("Test result:")
 evaluate("../checkpoint", "OneHiddenlayer", test_set, showHistory = True)
 print("-------------------------------")
+print("Train result:")
 evaluate("../checkpoint", "OneHiddenlayer", train_set)
