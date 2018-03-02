@@ -3,42 +3,38 @@ import time
 import os
 import matplotlib.pyplot as plt
 from torch.autograd import Variable
+from torch.utils.data import Dataset, DataLoader
 
 from neural_network import *
-
-def get_outputs(net, instances):
-    # create instance of Pytorch
-    instances = Variable(instances)
-    # get output of that instance
-    outputs = net(instances)
-    return outputs
 
 def evaluate_net(net, dataset):
     # initialize some parameters
     loss = 0
     correct = 0
     total = 0
-    
-    m = len(dataset)
+    criterion = nn.CrossEntropyLoss()
 
     # Switch to evaluation mode.
     net.eval()
-    
-    for i in range(m):
-        # get the output from dataset[i]
-        outputs = get_outputs(net, torch.from_numpy(dataset[i]['image']).float())
-        # get the correct label of the dataset[i]
-        labels = Variable(torch.from_numpy(dataset[i]['classId']).long())
-        # update loss
-        loss += nn.CrossEntropyLoss(size_average=False)(outputs, labels).data[0]
+    # We need the batch_size to be equal 1 for testing
+    dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
+
+    for i_batch, sample_batched in enumerate(dataloader):
+        input = sample_batched['image']
+        target = sample_batched['classId']
+        # convert the image and classId into Variable
+        input = Variable(input.float())
+        target = Variable(target)
+        # calculate and update the loss
+        outputs = net(input)
+        loss += criterion(outputs, target).data[0]
         # get the maximum predicted
         score, predicted = torch.max(outputs, 1)
         # check if label and predict is the same
-        now = (labels.data == predicted.data).sum()
+        now = (target.data == predicted.data).sum()
         # update the params
-        correct += now    
-        total += labels.size(0)
-    
+        correct += now
+        total += target.size(0)
     acc = correct / total
     loss /= total
 
@@ -55,16 +51,16 @@ def plotHistory(hist):
 def evaluate(checkpoint_path, model_name, dataset, showHistory = False):
     # inital the network
     net = Net()
-    
+
     # retrieve params from checkpoint
     name_checkpoint = model_name + ".chkpt"
     checkpoint = torch.load(os.path.join(checkpoint_path, name_checkpoint))
     hist = checkpoint["hist"]
     net.load_state_dict(checkpoint["net"])
-    
+
     if (showHistory):
         plotHistory(hist)
-    
+
     # evaluate and check for loss, accuracy and run-time per image
     start = time.time()
     loss, acc = evaluate_net(net, dataset)
