@@ -6,8 +6,29 @@ The `checkpoint` folder contains the record of my pre-trained network. You can u
 
 4 folders contain very similar code. Their only difference is the `neural_network.py`.
 
-However, only the folder `NoneHiddenLayer` describes the content of each file, the way they interact with one another, and the way to train and test the models.
+### Content of each file
+* 1) Neural_network.py: a class that represent the neural network architecture.
+* 2) Train_dataset.py and Test_dataset.py: 2 classes for the Dataloader of Pytorch.
+* 3) Train_method.py: contains every method we need for training.
+* 4) Evaluate.py: contains every method we need for testing.
+* 5) Train.py: run this file to start training.
+* 6) Test.py: run this file to start testing.
 
+### Start training and testing:
+
+Train:
+```bash
+$ cd <your_desired_folder>
+$ python train.py
+```
+I do not use learning rate decay, so you need to change the learning rate when the loss starts to diverge:
+```bash
+$ nano train.py
+```
+Test:
+```bash
+$ python test.py
+```
 # Architecture of each model
 
 ### Neural network without any hidden layer
