@@ -18,8 +18,9 @@ I have tried the following appraches:
 
 Prerequisites
 
-    Python OpenCV.
-    PyTorch.
+* Python OpenCV.
+* PyTorch.
+* Pandas.
 
 This was the project of myself after I learned Deep Learning course on Coursera by Andrew Ng.
 
