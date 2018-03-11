@@ -27,9 +27,9 @@ This was the project of myself after I learned Deep Learning course on Coursera 
 # Preparation / Download dataset
 
 Firstly, just like any github project, you have to clone it down by doing:
-    
-    git clone https://github.com/phvietan/Traffic-Sign-Recognition.git
-    
+```bash
+$ git clone https://github.com/phvietan/Traffic-Sign-Recognition.git
+```
 After that, change directory into `Dataset` and follow the instruction inside to download the dataset.
 
 # How to run the project
