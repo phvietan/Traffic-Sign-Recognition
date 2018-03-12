@@ -5,7 +5,7 @@ In this work, I would like to explore different architecture of the neural netwo
 Official web page of GTSRB dataset: http://benchmark.ini.rub.de/?section=gtsrb&subsection=news
 
 The GTSRB consists of 43 types of traffic sign which is included inside the `Classes.txt` file.
-There are 39209 pictures for the train set and xxx pictures for the test set. The total number of pictures is therefore yyy. 
+There are 39209 pictures for the train set and 12630 pictures for the test set. The total number of pictures is therefore 51839. 
 
 More information about the dataset can be looked up at the website.
 
